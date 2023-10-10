@@ -3,21 +3,21 @@ import styles from "./styles.module.css";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 
+async function createTodo(formData: FormData) {
+  "use server";
+
+  const todo = formData.get("todo")?.valueOf().toString().trim();
+
+  if (!todo || todo?.length === 0) return console.log("todo is not set");
+
+  const createdTodo = await prisma.todo.create({
+    data: { name: todo as string },
+  });
+  console.log(createdTodo);
+  redirect("/");
+}
+
 function New() {
-  async function createTodo(formData: FormData) {
-    "use server";
-
-    const todo = formData.get("todo")?.valueOf().toString().trim();
-
-    if (!todo || todo?.length === 0) return console.log("todo is not set");
-
-    const createdTodo = await prisma.todo.create({
-      data: { name: todo as string },
-    });
-    console.log(createdTodo);
-    redirect("/");
-  }
-
   return (
     <form action={createTodo}>
       <input
