@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./styles.module.css";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
+import Form from "@/components/Form/Form";
 
 async function createTodo(formData: FormData) {
   "use server";
@@ -18,21 +18,7 @@ async function createTodo(formData: FormData) {
 }
 
 function New() {
-  return (
-    <form action={createTodo}>
-      <input
-        name="todo"
-        className="bg-transparent border border-slate-300 rounded-sm w-full text-white"
-        type="text"
-      />
-      <div className="float-right">
-        <input className={styles.formButton} type="reset" />
-        <button className={styles.formButton} type="submit">
-          Save
-        </button>
-      </div>
-    </form>
-  );
+  return <Form createTodo={createTodo} />;
 }
 
 export default New;
